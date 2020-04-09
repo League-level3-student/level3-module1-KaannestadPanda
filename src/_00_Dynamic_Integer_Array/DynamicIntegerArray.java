@@ -84,7 +84,7 @@ for(int i = 0; i < intArray2.length; i++) {
 	//9. Complete the steps in the remove method
 	public void remove(int location) {
 		//A. create a new array that is one element smaller than the member array
-		int[] intArray3=new int[intArray.length-2];
+		int[] intArray3=new int[intArray.length-1];
 		//B. make a for loop to iterate through the member array
 		for(int i = 0; i <intArray.length;i++) {
 			//C. if i  is less than location
