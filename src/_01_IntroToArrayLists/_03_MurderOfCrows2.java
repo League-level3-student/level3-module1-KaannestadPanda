@@ -24,18 +24,38 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
-public class _03_MurderOfCrows implements ActionListener {
+public class _03_MurderOfCrows2 implements ActionListener {
 
-    ArrayList<Crow> theMurder = new ArrayList<Crow>();
+    ArrayList<Qrow> theMurder = new ArrayList<Qrow>();
     Dimension dimension = new Dimension(400,400);
 
     public static void main(String[] args) {
-        _03_MurderOfCrows murderOfCrows = new _03_MurderOfCrows();
+        _03_MurderOfCrows2 murderOfCrows = new _03_MurderOfCrows2();
         murderOfCrows.initializeCrows();
-      murderOfCrows.findTheDiamond();
+        murderOfCrows.setup();
+      //murderOfCrows.findTheDiamond();
     }
     
-
+    void setup() {
+    	JFrame frame = new JFrame();
+		JPanel panel = new JPanel();
+		frame.add(panel);
+		
+		for(int i = 0; i<theMurder.size();i++) {
+			
+			JButton button = new JButton();
+			button.setPreferredSize(dimension);
+			button.addActionListener(this);
+			panel.add(button);
+			
+		}
+		
+		
+		
+		frame.pack();
+		frame.setVisible(true);
+		
+    }
     
     
     int innocentDeaths=0;
@@ -67,11 +87,11 @@ public class _03_MurderOfCrows implements ActionListener {
     }
 
     private void initializeCrows() {
-        theMurder.add(new Crow("Rok"));
-        theMurder.add(new Crow("Merle"));
-        theMurder.add(new Crow("Poe"));
-        theMurder.add(new Crow("Grenwyn"));
-        theMurder.add(new Crow("Crawford"));
+        theMurder.add(new Qrow("Rok"));
+        theMurder.add(new Qrow("Merle"));
+        theMurder.add(new Qrow("Poe"));
+        theMurder.add(new Qrow("Grenwyn"));
+        theMurder.add(new Qrow("Crawford"));
         hideTheDiamond();
     }
 
@@ -89,11 +109,11 @@ public class _03_MurderOfCrows implements ActionListener {
 	}
 }
 
-class Crow {
+class Qrow {
     private String name;
     private ArrayList<String> stomachContents = new ArrayList<String>();
 
-    public Crow(String name) {
+    public Qrow(String name) {
         this.name = name;
         fillCrowsStomach();
     }

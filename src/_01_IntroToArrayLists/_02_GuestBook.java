@@ -64,8 +64,16 @@ public class _02_GuestBook implements ActionListener {
 	
 	void viewNames() {
 		String summary = "";
+		for(int i = 0; i<nameList.size();i++) {
+			summary=summary+"Guest #"+(i+1)+": "+nameList.get(i)+"\n";
+		}
 		
+		if(summary.equals("")) {
+			JOptionPane.showMessageDialog(null, "There are no guests");
+		}
+		else {
 		JOptionPane.showMessageDialog(null, summary);
+		}
 	}
 
 
