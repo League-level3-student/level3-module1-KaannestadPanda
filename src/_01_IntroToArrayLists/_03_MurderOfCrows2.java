@@ -25,7 +25,8 @@ import javax.swing.JPanel;
 
 
 public class _03_MurderOfCrows2 implements ActionListener {
-
+	JFrame frame = new JFrame();
+	JPanel panel = new JPanel();
     ArrayList<Qrow> theMurder = new ArrayList<Qrow>();
     Dimension dimension = new Dimension(400,400);
 
@@ -37,8 +38,8 @@ public class _03_MurderOfCrows2 implements ActionListener {
     }
     
     void setup() {
-    	JFrame frame = new JFrame();
-		JPanel panel = new JPanel();
+    	
+		
 		frame.add(panel);
 		
 		for(int i = 0; i<theMurder.size();i++) {
@@ -46,6 +47,7 @@ public class _03_MurderOfCrows2 implements ActionListener {
 			JButton button = new JButton();
 			button.setPreferredSize(dimension);
 			button.addActionListener(this);
+			button.setText(theMurder.get(i).getName());
 			panel.add(button);
 			
 		}
@@ -78,12 +80,7 @@ public class _03_MurderOfCrows2 implements ActionListener {
     	
         
         /* 2. How many innocent crows had to die before the diamond was found? */
-    	if(innocentDeaths==0) {
-    		JOptionPane.showMessageDialog(null,"Well done! You destroyed the GUILTY crow only. That theiving b*****! aahahahahhaaahaHAAaAhAhHhHHHahHAAAHHAHAAHAAAHAHAAHAHAHAHAAHAHAHAHAHAHA");
-    	}
-    	else{
-    	JOptionPane.showMessageDialog(null, "You ripped open "+innocentDeaths+" innocent crows. Was it worth it?");
-    	}
+    	
     }
 
     private void initializeCrows() {
@@ -103,8 +100,49 @@ public class _03_MurderOfCrows2 implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		JButton check = (JButton) e.getSource();
 		
 		
+		
+		for(int i = 0;i<theMurder.size();i++) {
+			if(theMurder.get(i).getName()==check.getText()) {
+				
+				for(int k = 0;k<panel.getComponents().length;k++) {
+					if(panel.getComponents()[k] instanceof JButton) {
+						
+						if( ((JButton)panel.getComponents()[k]).getText()==check.getText() ) {
+							panel.remove(panel.getComponents()[k]);
+						
+						}
+						
+					}
+					
+				}
+				
+				if(theMurder.get(i).getStomachContents().contains("diamond")) {
+	    			
+	    			
+	    			if(innocentDeaths==0) {
+	    	    		JOptionPane.showMessageDialog(null,"Well done! You destroyed the GUILTY crow only. It was "+theMurder.get(i).getName()+", that theiving b*****! aahahahahhaaahaHAAaAhAhHhHHHahHAAAHHAHAAHAAAHAHAAHAHAHAHAAHAHAHAHAHAHA");
+	    	    	}
+	    	    	else{
+	    	    	JOptionPane.showMessageDialog(null, "You managed to end the life of the theif, "+theMurder.get(i).getName()+"... you ripped open "+innocentDeaths+" innocent crows. Was it worth it?");
+	    	    	
+	    	    	}
+	    			
+	    			
+	    			
+	    			
+	    			System.exit(0);
+	    		}
+	    		else {
+	    			JOptionPane.showMessageDialog(null, "YOU MONSTER! WHY WOULD YOU DO THIS? HE HASN'T DONE ANYTHING WRONG!!! I HOPE YOU'RE HAPPY, YOU BADSKSDCNkCNdkUHHUnuhuhuh \n *sobs* \n*is led away by officers*");
+	    			innocentDeaths++;
+	    		}
+				
+				
+			}
+		}
 		
 	}
 }
