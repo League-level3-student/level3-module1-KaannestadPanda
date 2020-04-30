@@ -7,6 +7,8 @@ import java.util.Random;
 //Copyright The League of Amazing Programmers, 2015
 
 public class _06_IPodShuffle{
+	ArrayList<Song> songs = new ArrayList<Song>();
+	Song song1 = new Song("https://www.youtube.com/watch?v=Oy_JlG7C-T8");
 	public _06_IPodShuffle() {
 		// 1. Use the Song class the play the demo.mp3 file.
 				
@@ -22,6 +24,7 @@ public class _06_IPodShuffle{
 	}
 	
 	public static void main(String[] args) {
-		new _06_IPodShuffle();
+		_06_IPodShuffle a = new _06_IPodShuffle();
+		a.songs.add(a.song1);
 	}
 }
