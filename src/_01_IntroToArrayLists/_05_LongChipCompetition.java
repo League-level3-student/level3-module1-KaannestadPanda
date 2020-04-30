@@ -13,9 +13,33 @@ public class _05_LongChipCompetition {
 	 * initialize The Beatles before you start your search. *
 	 **/
 	private ArrayList<Beatle> theBeatles = new ArrayList<Beatle>();
-
+	
+	
 	public static void main(String[] args) {
+	
+		
 		_05_LongChipCompetition lcc = new _05_LongChipCompetition();
+		
+		lcc.initializeBeatles();
+		
+		
+		String ownerName="";
+		double bigLength=0;
+		for(int i = 0; i<lcc.theBeatles.size();i++) {
+			
+			for(int k = 0;k<lcc.theBeatles.get(i).getChips().size();k++) {
+				if(lcc.theBeatles.get(i).getChips().get(k).getLength()>bigLength) {
+				bigLength=lcc.theBeatles.get(i).getChips().get(k).getLength();
+				ownerName=lcc.theBeatles.get(i).getName();
+				}
+				
+			}
+			
+		}
+		
+		
+		System.out.println(ownerName+", "+ bigLength);
+
 		
 	}
 	
