@@ -19,8 +19,9 @@ public class _06_IPodShuffle implements ActionListener{
 	
 	ArrayList<Song> songs = new ArrayList<Song>();
 	ArrayList<Song> playingSongs = new ArrayList<Song>();
+	Song playing;
 	Song song1 = new Song("harehareya.mp3");
-	//Song song2 = new Song("y2mate.com - FIREWORK FULL COVER (JONTRON OFFICIAL)_Oy_JlG7C-T8.mp3");
+	Song song2 = new Song("y2mate.com - FIREWORK FULL COVER (JONTRON OFFICIAL)_Oy_JlG7C-T8.mp3");
 	public _06_IPodShuffle() {
 		// 1. Use the Song class the play the demo.mp3 file.
 				JFrame frame = new JFrame();
@@ -54,20 +55,20 @@ public class _06_IPodShuffle implements ActionListener{
 		_06_IPodShuffle a = new _06_IPodShuffle();
 		
 		a.songs.add(a.song1);
-		//a.songs.add(a.song2);
+		a.songs.add(a.song2);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("action");
+	
 		// TODO Auto-generated method stub
 		JButton check = (JButton) e.getSource();
 		if(check== butone) {
 			playSong();
-			System.out.println("if");
+			
 		}
 		if(check== buttwo) {
-			System.out.println("stopif");
+			
 			stopSongs();
 		}
 	}
@@ -75,22 +76,30 @@ public class _06_IPodShuffle implements ActionListener{
 	
 	
 	void playSong(){
+		if(playing!=null) {
+		playing.stop();
+		}
 		
 		Random ran = new Random();
 		int ranInt = ran.nextInt(songs.size());
 		
-		playingSongs.add(songs.get(ranInt));
-		songs.get(ranInt).play();
+
+		playing=(songs.get(ranInt));
+		playing.play();
+
+
+		
+		
 		
 	}
 	
 	void stopSongs() {
-		if(playingSongs.size()>=0) {
-		for(int i = playingSongs.size()-1;i>=0;i--) {
-			playingSongs.get(i).stop();
-		}
+		if(playing!=null) {
+		
+			playing.stop();
 		}
 	}
+	
 	
 	
 }
