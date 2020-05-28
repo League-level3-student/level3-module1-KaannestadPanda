@@ -7,9 +7,11 @@ import javax.swing.JOptionPane;
 
 public class _01_IntroToStack {
 	public static void main(String[] args) {
+		Boolean fail=false;
 		//1. Create a Stack of Doubles
 		//   Don't forget to import the Stack class
-		Stack a = new Stack();
+		Stack<Integer> a = new Stack<Integer>();
+		
 		//2. Use a loop to push 100 random doubles between 0 and 100 to the Stack.
 		Random ran=new Random();
 		
@@ -21,11 +23,53 @@ public class _01_IntroToStack {
 		}
 		
 		//3. Ask the user to enter in two numbers between 0 and 100, inclusive. 
-		JOptionPane.showInputDialog("Put some ggggggg-demm numbers between 0 and 100");
+		String first=JOptionPane.showInputDialog("Put an integer between 0 and 100");
+		String second=JOptionPane.showInputDialog("Put another integer between 0 and 100");
 		//4. Pop all the elements off of the Stack. Every time a double is popped that is
 		//   between the two numbers entered by the user, print it to the screen.
+		int firstInt=Integer.parseInt(first);
+		int secondInt=Integer.parseInt(second);
+
+		int highInt=0;
+		int lowInt=0;
 		
-		for(int )
+		
+		if(firstInt>100||firstInt<1||secondInt>100||secondInt<1) {
+			fail=true;
+		}
+		if(firstInt==secondInt) {
+			fail=true;
+		}
+		else if(firstInt>secondInt) {
+			highInt=firstInt;
+			lowInt=secondInt;
+		}
+		else {
+			
+			highInt=secondInt;
+			lowInt=firstInt;
+			
+		}
+		
+		
+		int numberNum=0;
+		
+		if(fail==false) {
+			System.out.println("Elements between "+lowInt+" and "+highInt+": ");
+			
+		for(int i=0;i<a.size();i++) {
+			int popInt=a.pop();
+			if(popInt>lowInt&&popInt<highInt) {
+				numberNum++;
+				System.out.println("Element #"+numberNum+": "+popInt);
+			}
+		}
+		
+		
+		}
+		else {
+			System.out.println("You failed somehow. Either you entered an integer outside 1-100, or you put two of the same integers.");
+		}
 		
 		//   EXAMPLE:
 		//   NUM 1: 65
