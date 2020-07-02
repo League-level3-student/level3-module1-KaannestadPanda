@@ -15,143 +15,149 @@ import javax.swing.JPanel;
 
 public class HangMan implements KeyListener, ActionListener {
 
-	JFrame fram=new JFrame();
-	
+	JFrame fram = new JFrame();
+	String gamephase = "guessing";
+
 	JFrame frame = new JFrame();
 	JPanel panel = new JPanel();
 	JLabel label = new JLabel();
 	JLabel label2 = new JLabel();
+	JLabel infoLabel = new JLabel();
 	JLabel livesLabel = new JLabel();
+	JButton button = new JButton("proceed");
 	Stack<String> strings = new Stack<String>();
 	String currentword;
 	String blanks;
-	boolean wordFinished=false;
+	// boolean wordFinished=false;
 
-	
 	String beginning;
 	String ending;
-	
-	int lives=5;
-	boolean success=false;
-	
+
+	int lives = 5;
+	boolean success = false;
+
 	public static void main(String[] args) {
 		HangMan a = new HangMan();
 		a.setup();
 	}
 
 	void setup() {
+		
+		
+		lives = 5;
 		String inputNumber = JOptionPane
 				.showInputDialog("Give a number for the number of words and that's the number you'll give and get");
 		int inputInt = Integer.parseInt(inputNumber);
-		
-		for(int i = 0; i<inputInt;i++) {
+
+		for (int i = 0; i < inputInt; i++) {
 			String a = Utilities.readRandomLineFromFile("src/_04_HangMan/dictionary.txt");
 			strings.push(a);
 		}
-		
 
 		frame.add(panel);
 		panel.add(label);
 		panel.add(label2);
 		panel.add(livesLabel);
+		panel.add(infoLabel);
+		button.setFocusable(false);
+		panel.add(button);
 		frame.addKeyListener(this);
-		
 
 		Dimension d = new Dimension(400, 400);
+		Dimension dtwo = new Dimension(300, 200);
 		label.setPreferredSize(d);
 		label2.setPreferredSize(d);
 		livesLabel.setPreferredSize(d);
+		button.setPreferredSize(d);
+		button.addActionListener(this);
+		infoLabel.setPreferredSize(dtwo);
 
 		frame.pack();
 		frame.setVisible(true);
-		
+
 		newWord();
 
 	}
-	
+
 	void newWord() {
-		if(strings.size()>0) {
-		currentword=strings.pop();
-		label.setText(currentword);
-		livesLabel.setText(""+lives);
-		
-		blanks="";
-		for(int i = 0;i<currentword.length();i++) {
-		blanks=blanks+"_ ";
-		}
-		System.out.println(blanks);
-		label2.setText(blanks);
-		}
-		else {
+		gamephase = "guessing";
+		System.out.println("changed to guessing");
+		if (strings.size() > 0) {
+			currentword = strings.pop();
+			label.setText(currentword);
+			livesLabel.setText("" + lives);
+
+			blanks = "";
+			for (int i = 0; i < currentword.length(); i++) {
+				blanks = blanks + "_ ";
+			}
+			System.out.println(blanks);
+			label2.setText(blanks);
+		} else {
 			winGame();
 		}
-		
+		updateButton();
+
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-for(int g = 0; g<currentword.length();g++) {
-	if(e.getKeyChar()==(currentword.charAt(g))) {
 		
-beginning=blanks.substring(0, g*2);
-System.out.println(beginning);
-ending=blanks.substring(g*2+1);
-System.out.println(ending);
-		
-	
-	blanks=beginning+e.getKeyChar()+ending;
-	label2.setText(blanks);
-	
-	success=true;
-	}
-}
-if(success==true) {
-	success=false;
-}
-else {
-	lives--;
-	livesLabel.setText(""+lives);
-	if(lives<=0) {
-		loseGame();
-	}
-}
+		if(gamephase.equals("guessing")) {
+			
 
-if(blanks.contains("_")==false) {
-	JOptionPane.showMessageDialog(null, "Correct, the word was "+currentword);
-	newWord();
-	
-}
+			for (int g = 0; g < currentword.length(); g++) {
+				if (e.getKeyChar() == (currentword.charAt(g))) {
 
+					beginning = blanks.substring(0, g * 2);
+					System.out.println(beginning);
+					ending = blanks.substring(g * 2 + 1);
+					System.out.println(ending);
 
+					blanks = beginning + e.getKeyChar() + ending;
+					label2.setText(blanks);
+
+					success = true;
+				}
+			}
+			if (success == true) {
+				success = false;
+			} else {
+				lives--;
+				livesLabel.setText("" + lives);
+				if (lives <= 0) {
+					loseGame();
+				}
+			}
+
+			if (blanks.contains("_") == false) {
+				infoLabel.setText("Correct, the word was " + currentword);
+				gamephase = "guessedword";
+				System.out.println("changed to guessedword");
+
+			}
+			
+		}
+
+			updateButton();
 		
-		
-		
+
 	}
-	
+
 	void winGame() {
-		JOptionPane.showMessageDialog(null,"win");
-		askRestart();
+
+		infoLabel.setText("YOU WIN!!! Your last word was " + currentword);
+		gamephase = "end";
+		System.out.println("changed to end");
 	}
+
 	void loseGame() {
-		
-		JOptionPane.showMessageDialog(null,"Lose game, this word was "+currentword);
-		askRestart();
+
+		infoLabel.setText("YOU LOSE, this word was " + currentword);
+		gamephase = "end";
+		System.out.println("changed to end");
 	}
-	
-	void askRestart() {
-		frame=new JFrame();//delete frame
-		
-		JPanel pane = new JPanel();
-		JButton button = new JButton("Play again?");
-		
-		fram.add(pane);
-		pane.add(button);
-		button.addActionListener(this);
-		fram.pack();
-		fram.setVisible(true);
-	}
-	
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -165,11 +171,25 @@ if(blanks.contains("_")==false) {
 
 	}
 
+	void updateButton() {
+		if (gamephase.equals("end")) {
+			button.setText("new game");
+		} else if (gamephase.equals("guessedword")) {
+			button.setText("new word");
+		} else if (gamephase.equals("guessing")) {
+			button.setText("guessing");
+		}
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		fram=new JFrame();//delete fram
-		setup();
+		System.out.println("buttonclicked");
+		if (gamephase.equals("end")) {
+			setup();
+		} else if (gamephase.equals("guessedWord")) {
+			newWord();
+		}
 	}
 
 }
