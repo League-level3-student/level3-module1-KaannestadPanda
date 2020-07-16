@@ -1,9 +1,27 @@
 package _06_Intro_To_Hash_Maps;
 
+import java.util.HashMap;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class _02_LogSearch {
+	HashMap<Integer, String> studentRoster = new HashMap<Integer, String>();
+	
+	public static void main(String[] args) {
+		_02_LogSearch a = new _02_LogSearch();
+		a.setup();
+	}
+	
+	
+	void setup() {
+		JFrame frame = new JFrame();
+		JPanel panel = new JPanel();
+		JButton button = new JButton();
+	}
   /* 
-	 * Crate a HashMap of Integers for the keys and Strings for the values.
+	 * Create a HashMap of Integers for the keys and Strings for the values.
 	 * Create a GUI with three buttons. 
 	 * Button 1: Add Entry
 	 * 				When this button is clicked, use an input dialog to ask the user to enter an ID number.

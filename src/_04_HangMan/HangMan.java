@@ -28,12 +28,16 @@ public class HangMan implements KeyListener, ActionListener {
 	Stack<String> strings = new Stack<String>();
 	String currentword;
 	String blanks;
-	// boolean wordFinished=false;
+	
+	Dimension d = new Dimension(400, 400);
+	Dimension dtwo = new Dimension(300, 200);
 
 	String beginning;
 	String ending;
 
-	int lives = 5;
+	boolean fixedKeyListenerError=false;
+	
+	int lives;
 	boolean success = false;
 
 	public static void main(String[] args) {
@@ -44,27 +48,32 @@ public class HangMan implements KeyListener, ActionListener {
 	void setup() {
 		
 		
-		lives = 5;
+		lives = 50;
 		String inputNumber = JOptionPane
 				.showInputDialog("Give a number for the number of words and that's the number you'll give and get");
 		int inputInt = Integer.parseInt(inputNumber);
 
 		for (int i = 0; i < inputInt; i++) {
 			String a = Utilities.readRandomLineFromFile("src/_04_HangMan/dictionary.txt");
+			if(strings.contains(a)==false) {
 			strings.push(a);
+			}
 		}
 
 		frame.add(panel);
-		panel.add(label);
+		//panel.add(label);
 		panel.add(label2);
 		panel.add(livesLabel);
 		panel.add(infoLabel);
 		button.setFocusable(false);
 		panel.add(button);
+		
+		if(fixedKeyListenerError==false) {
 		frame.addKeyListener(this);
+		fixedKeyListenerError=true;
+		}
 
-		Dimension d = new Dimension(400, 400);
-		Dimension dtwo = new Dimension(300, 200);
+		
 		label.setPreferredSize(d);
 		label2.setPreferredSize(d);
 		livesLabel.setPreferredSize(d);
@@ -82,7 +91,8 @@ public class HangMan implements KeyListener, ActionListener {
 	void newWord() {
 		gamephase = "guessing";
 		System.out.println("changed to guessing");
-		if (strings.size() > 0) {
+		
+		
 			currentword = strings.pop();
 			label.setText(currentword);
 			livesLabel.setText("" + lives);
@@ -93,9 +103,7 @@ public class HangMan implements KeyListener, ActionListener {
 			}
 			System.out.println(blanks);
 			label2.setText(blanks);
-		} else {
-			winGame();
-		}
+		
 		updateButton();
 
 	}
@@ -133,8 +141,14 @@ public class HangMan implements KeyListener, ActionListener {
 
 			if (blanks.contains("_") == false) {
 				infoLabel.setText("Correct, the word was " + currentword);
-				gamephase = "guessedword";
-				System.out.println("changed to guessedword");
+				if(strings.size()>0) {
+					gamephase="guessedword";
+					System.out.println("changed to guessedword");
+				}
+				else {
+				winGame();
+				}
+				
 
 			}
 			
@@ -187,9 +201,11 @@ public class HangMan implements KeyListener, ActionListener {
 		System.out.println("buttonclicked");
 		if (gamephase.equals("end")) {
 			setup();
-		} else if (gamephase.equals("guessedWord")) {
+		} else if (gamephase.equals("guessedword")) {
+			
 			newWord();
 		}
+		
 	}
 
 }
