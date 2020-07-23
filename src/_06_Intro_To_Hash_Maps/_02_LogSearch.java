@@ -1,13 +1,20 @@
 package _06_Intro_To_Hash_Maps;
 
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class _02_LogSearch {
+public class _02_LogSearch implements ActionListener {
 	HashMap<Integer, String> studentRoster = new HashMap<Integer, String>();
+	JButton button = new JButton();
+	JButton button2 = new JButton();
+	JButton button3 = new JButton();
 	
 	public static void main(String[] args) {
 		_02_LogSearch a = new _02_LogSearch();
@@ -16,9 +23,25 @@ public class _02_LogSearch {
 	
 	
 	void setup() {
+		Dimension d = new Dimension(200,200);
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
-		JButton button = new JButton();
+		
+		button.setPreferredSize(d);
+		button2.setPreferredSize(d);
+		button3.setPreferredSize(d);
+		
+		button.addActionListener(this);
+		button2.addActionListener(this);
+		button3.addActionListener(this);
+		
+		frame.add(panel);
+		panel.add(button);
+		panel.add(button2);
+		panel.add(button3);
+		
+		frame.pack();
+		frame.setVisible(true);
 	}
   /* 
 	 * Create a HashMap of Integers for the keys and Strings for the values.
@@ -47,5 +70,35 @@ public class _02_LogSearch {
 	 * 				is not in the list. 
 	 *
 	 * */
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		JButton checkButton=(JButton) e.getSource();
+		
+		if(checkButton==button) {
+			String keyString=JOptionPane.showInputDialog("Enter an ID number.");
+			int keyInt = Integer.parseInt(keyString);
+			String value=JOptionPane.showInputDialog("Now, enter a name.");
+			studentRoster.put(keyInt, value);
+		}
+		else if(checkButton==button2) {
+			String searchedKeyString=JOptionPane.showInputDialog("Enter an ID number");
+			int searchedKeyInt = Integer.parseInt(searchedKeyString);
+			if(studentRoster.containsKey(searchedKeyInt)) {
+			JOptionPane.showMessageDialog(null, "The corresponding name is "+studentRoster.get(searchedKeyInt));
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "That key does not exist.");
+			}
+		}
+		else {
+	for(int i = 0; i<studentRoster.size();i++) {
+		
+	}
+		}
+		
+	}
 	
 }
